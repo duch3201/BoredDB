@@ -1,0 +1,17 @@
+meta {
+  name: getTables
+  type: http
+  seq: 2
+}
+
+get {
+  url: 127.0.0.1:3000/tables
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "db":"db2"
+  }
+}

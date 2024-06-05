@@ -1,0 +1,18 @@
+meta {
+  name: createTable
+  type: http
+  seq: 4
+}
+
+put {
+  url: 127.0.0.1:3000/createTable
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "db":"db2",
+    "tableName":"teesstt2"
+  }
+}
