@@ -7,12 +7,17 @@ meta {
 put {
   url: 127.0.0.1:3000/createTable
   body: json
-  auth: none
+  auth: basic
+}
+
+auth:basic {
+  username: admin
+  password: 1wcDXgbBi8TL0DqpMiigpjHjQ6mAMEP8R4Mat5zBifDTG
 }
 
 body:json {
   {
-    "db":"db2",
-    "tableName":"teesstt2"
+    "db":"test4",
+    "tableName":"Users2"
   }
 }

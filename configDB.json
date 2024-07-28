@@ -1,1 +1,14 @@
-{}
+{
+  "port": 3000,
+  "users": [
+    {
+      "username": "admin",
+      "password": "5a4a6328a1e558d1eab4e332bb1e4d60",
+      "perms": [
+        {
+          "*": "*"
+        }
+      ]
+    }
+  ]
+}

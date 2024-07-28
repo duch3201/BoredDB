@@ -1,0 +1,19 @@
+meta {
+  name: deleteData
+  type: http
+  seq: 8
+}
+
+delete {
+  url: http://127.0.0.1:3000/delete
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "db":"test3",
+    "tableName":"Users",
+    "query":{"id":"d2638d1f-4456-4bf5-b491-90a47de7da46"}
+  }
+}

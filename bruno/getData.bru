@@ -1,0 +1,21 @@
+meta {
+  name: getData
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://127.0.0.1:3000/getData
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "db": "test3",
+    "table": "Users",
+    "query": {
+      "id": "d2638d1f-4456-4bf5-b491-90a47de7da46"
+    }
+  }
+}

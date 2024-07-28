@@ -11,24 +11,38 @@ class JsonDB {
       this.data = JSON.parse(fileData) || {}; // Handle potential parsing errors
     } catch (error) {
       // Handle errors gracefully, e.g., create an empty database
+      if (!fs.existsSync(filename)) {
+        if (fs.existsSync(filename)) {
+          throw new Error(`Database '${filename}' already exists.`);
+        }
+        try {
+          fs.writeFileSync(filename, '{}'); // Create an empty JSON file
+          return filename
+        } catch (error) {
+          console.error(`Error creating database file: ${error.message}`);
+          throw error; // Re-throw the error for handling
+        }
+      }
       console.error(`Error reading database file: ${error.message}`);
       this.data = {};
     }
   }
 
-  get(tableName, query = {}) {
+  get(tableName, ...query) {
     if (!this.data.hasOwnProperty(tableName)) {
       return []; // Return empty array if table doesn't exist
     }
-
-    if (query === "*") {
+  
+    if (query[0] === "*") {
       return this.data[tableName]; // Return all entries if query is "*"
     }
-
-    // Filter entries based on query object
+  
+    // Combine query objects using spread operator
+    const combinedQuery = Object.assign({}, ...query);
+  
+    // Filter entries based on combined query
     return this.data[tableName].filter((entry) => {
-      // Check if all properties in the query match the entry
-      return Object.keys(query).every((key) => entry[key] === query[key]);
+      return Object.keys(combinedQuery).every((key) => entry[key] === combinedQuery[key]);
     });
   }
 
@@ -41,10 +55,55 @@ class JsonDB {
     this.#saveData();
   }
 
-  delete(key) {
+  update(tableName, what, ...query) {
+    if (!this.data.hasOwnProperty(tableName)) {
+      return "Table doesn't exist";
+    }
+  
+    const combinedQuery = Object.assign({}, ...query);
+    const keysToUpdate = Object.keys(combinedQuery);
+  
+    let updatedCount = 0;
+  
+    this.data[tableName].forEach((entry) => {
+      if (keysToUpdate.every((key) => entry[key] === combinedQuery[key])) {
+        Object.assign(entry, what);
+        updatedCount++;
+      }
+    });
+  
+    this.#saveData(); // Assuming this saves the modified data
+    return `${updatedCount} Updated`;
+  }
+
+  
+  delete(tableName, ...query) {
+    if (!this.data.hasOwnProperty(tableName)) {
+      return "Table doesn't exist";
+    }
+  
+    const combinedQuery = Object.assign({}, ...query);
+    const keysToDelete = Object.keys(combinedQuery);
+    const originalLength = this.data[tableName].length;
+  
+    // Filter for entries matching both conditions
+    this.data[tableName] = this.data[tableName].filter(
+      (entry) => !keysToDelete.every((key) => entry[key] === combinedQuery[key])
+    );
+    
+    const deletedCount = originalLength - this.data[tableName].length;
+
+
+    this.#saveData(); // Assuming this saves the modified data
+    return `${deletedCount} Deleted`
+  }
+  
+
+  deleteTable(key) {
     if (this.data.hasOwnProperty(key)) {
       delete this.data[key];
       this.#saveData();
+      return "ok"
     }
   }
 

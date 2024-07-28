@@ -1,0 +1,37 @@
+{
+    "Users": [
+      {
+        "username": "shadowman",
+        "apiKey": "49aa8871-c7ee-43d7-8153-056a95401baf",
+        "id": "3fff553c-01f9-463a-b448-5889da3f1921"
+      }
+    ],
+    "s3": [
+      {
+        "bucket": "Test",
+        "key": "Wallpaper.jpg",
+        "path": "buckets/Test/Wallpaper.jpg",
+        "size": 476192,
+        "mimeType": "image/jpeg",
+        "id": "93918065-4ae3-4dbd-ad81-130371f290ce"
+      },
+      {
+        "bucket": "Test",
+        "key": "gordon_ramsayModelFile",
+        "path": "buckets/Test/gordon_ramsayModelFile",
+        "size": 564,
+        "mimeType": "application/octet-stream",
+        "id": "7fab04e9-55e8-481b-992e-c2e5ceca7ea8"
+      }
+    ],
+    "Services": [
+      {
+        "type": "s3",
+        "name": "Test",
+        "byUser": "3fff553c-01f9-463a-b448-5889da3f1921",
+        "path": "buckets/Test",
+        "isPublic": true,
+        "id": "398a87af-c046-457b-824d-c012416ee5a3"
+      }
+    ]
+  }
